@@ -1,0 +1,46 @@
+NestedScrollView(
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled){
+            return<Widget>[
+              SliverOverlapAbsorber(handle:
+                NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+                sliver: SliverAppBar(
+                  pinned: true,
+                  //floating.true,
+                  stretch: true,
+                  expandedHeight: 200,
+                  flexibleSpace: FlexibleSpaceBar(
+                    stretchModes: <StretchMode>[
+                        StretchMode.zoomBackground
+                    ],
+                    centerTitle: true,
+                    title: Text('John Doe'),
+                    background: Image.network('https://www.gettyimages.dk/gi-resources/images/500px/983794168.jpg',fit: BoxFit.cover,)
+                  ),
+                ),
+              )
+            ];
+          }, body: SafeArea(child: Builder(
+            builder: (BuildContext context){
+              return CustomScrollView(
+                slivers: [
+                  SliverOverlapInjector(handle:
+                    NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+                  ),
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                            (BuildContext context, int i){
+                          return ListTile(
+                            leading: Icon(Icons.wb_sunny),
+                            title: i%2 != 1 ? Text('Sunday ${i+1}') : Text('Monday ${i+1}'),
+                            subtitle: Text('sunny, h: 80, l: 65'),
+                          );
+                        },
+                        childCount: 5
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
+        )
